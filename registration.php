@@ -8,25 +8,10 @@ $registrationCourses = require __DIR__ . '/course-data.php';
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#120c0a">
-  <title>Daftar Kursus | KursusKu</title>
+  <title>Daftar Kursus - KursusKu</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/polish.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body, input, select, textarea, button {
-      font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-    }
-    h1, h2, h3, .brand {
-      font-family: "Sora", "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
-    }
-    body {
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-  </style>
+
 </head>
 <body>
 <header class="site-header">
@@ -34,15 +19,15 @@ $registrationCourses = require __DIR__ . '/course-data.php';
     <a class="brand" href="index.php">KursusKu</a>
     <a href="index.php">Beranda</a>
     <a href="index.php#katalog">Katalog</a>
-    <a class="is-active" href="registration.php" aria-current="page">Daftar</a>
+    <a class="is-active" href="registration.php">Daftar</a>
     <a href="test-matrix.php">Test Matrix</a>
   </nav>
 </header>
 <main class="container">
   <section class="page-intro">
     <p class="eyebrow">Pendaftaran Kursus</p>
-    <h1>Yuk, mulai belajar bersama KursusKu</h1>
-    <p>Isi formulir dengan data latihan. Semua kolom bertanda wajib harus diisi.</p>
+    <h1>Mulai belajar bersama KursusKu</h1>
+    <p>Gunakan data latihan. Field bertanda wajib harus diisi.</p>
   </section>
   <section class="form-card">
     <form action="process-registration.php" method="POST" class="registration-form">
@@ -56,7 +41,7 @@ $registrationCourses = require __DIR__ . '/course-data.php';
                  autocomplete="name" required>
         </div>
         <div class="form-group">
-          <label for="email">Alamat Email</label>
+          <label for="email">Email</label>
           <input id="email" name="email" type="email"
                  maxlength="120" autocomplete="email" required>
         </div>
@@ -91,11 +76,11 @@ $registrationCourses = require __DIR__ . '/course-data.php';
           <h2 id="course-name">&nbsp;</h2>
         </div>
         <div class="course-package-total">
-          <span>Paket yang tersedia</span>
+          <span>Jumlah paket tersedia</span>
           <strong id="package-total">0 paket</strong>
         </div>
         <div>
-          <h3>Fasilitas yang Anda dapatkan</h3>
+          <h3>Fasilitas yang didapat</h3>
           <ul id="facility-list" class="facility-list"></ul>
         </div>
       </aside>
@@ -139,15 +124,15 @@ $registrationCourses = require __DIR__ . '/course-data.php';
       </fieldset>
 
       <div class="form-group">
-        <label for="note">Catatan Tambahan</label>
+        <label for="note">Catatan</label>
         <textarea id="note" name="note" rows="5" maxlength="300"
-                  placeholder="Ceritakan kebutuhan belajar Anda (opsional)"></textarea>
+                  placeholder="Tuliskan kebutuhan belajar Anda (opsional)"></textarea>
         <small class="help">Maksimal 300 karakter.</small>
       </div>
 
       <div class="button-group">
-        <button class="btn-primary" type="submit">Kirim Pendaftaran</button>
-        <a class="btn-secondary" href="history-dummy.php">Riwayat Dummy</a>
+        <button class="btn-primary" type="submit">Proses Pendaftaran</button>
+        <a class="btn-secondary" href="history.php">History</a>
         <a class="btn-secondary" href="loop-lab.php">Loop Lab</a>
       </div>
     </form>

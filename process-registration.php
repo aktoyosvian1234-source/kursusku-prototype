@@ -1,7 +1,12 @@
 <?php
 
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    header('Location: registration.php');
+    exit;
+}
+
 $method = $_SERVER['REQUEST_METHOD'];
-$dataSource = $method === 'GET' ? $_GET : $_POST;
+$dataSource = $_POST;
 $registrationCourses = require __DIR__ . '/course-data.php';
 
 $name = trim($dataSource['name'] ?? '');
@@ -74,26 +79,10 @@ function rupiah(int $value): string
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#120c0a">
-  <title>Ringkasan Pendaftaran | KursusKu</title>
+  <title>Ringkasan Pendaftaran - KursusKu</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <link rel="stylesheet" href="assets/css/summary.css">
   <link rel="stylesheet" href="assets/css/polish.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
-  <style>
-    body, input, select, textarea, button {
-      font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
-    }
-    h1, h2, h3, .brand {
-      font-family: "Sora", "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
-    }
-    body {
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-    }
-  </style>
 </head>
 <body>
 <header class="site-header">
@@ -101,59 +90,59 @@ function rupiah(int $value): string
     <a class="brand" href="index.php">KursusKu</a>
     <a href="index.php">Beranda</a>
     <a href="index.php#katalog">Katalog</a>
-    <a class="is-active" href="registration.php" aria-current="page">Daftar</a>
+    <a class="is-active" href="registration.php">Daftar</a>
     <a href="test-matrix.php">Test Matrix</a>
   </nav>
 </header>
 <main class="container result-page">
   <section class="page-intro result-intro">
     <p class="eyebrow">Ringkasan Pendaftaran</p>
-    <h1>Pendaftaran Anda Berhasil Diproses</h1>
-    <p>Silakan cek kembali kursus yang dipilih dan rincian pembayaran di bawah ini.</p>
+    <h1>Pendaftaran Berhasil Diproses</h1>
+    <p>Periksa kembali pilihan kursus dan rincian biaya Anda.</p>
   </section>
 
   <section class="summary-card registration-summary-card">
-    <p class="summary-overline">Data Peserta</p>
+    <p class="summary-overline">Data Pendaftaran</p>
 
     <dl class="summary-details">
       <div class="summary-detail">
-        <dt>Nama</dt>
+        <dt>Nama:</dt>
         <dd><?= e($name) ?></dd>
       </div>
       <div class="summary-detail">
-        <dt>Email</dt>
+        <dt>Email:</dt>
         <dd><?= e($email) ?></dd>
       </div>
       <div class="summary-detail">
-        <dt>Kursus</dt>
+        <dt>Kursus:</dt>
         <dd><?= e($course) ?></dd>
       </div>
       <div class="summary-detail">
-        <dt>Tipe peserta</dt>
+        <dt>Tipe peserta:</dt>
         <dd><?= e($participantTypeText) ?></dd>
       </div>
       <div class="summary-detail">
-        <dt>Metode belajar</dt>
+        <dt>Metode:</dt>
         <dd><?= e($learningMethodText) ?></dd>
       </div>
       <div class="summary-detail">
-        <dt>Jumlah paket</dt>
+        <dt>Jumlah paket:</dt>
         <dd><?= $packageCount > 0 ? e($packageCount) : '-' ?></dd>
       </div>
     </dl>
 
     <div class="summary-section">
-      <h2>Rincian Pembayaran</h2>
+      <h2>Rincian Biaya</h2>
       <dl class="cost-breakdown">
         <div><dt>Biaya satuan</dt><dd><?= e(rupiah($unitFee)) ?></dd></div>
         <div><dt>Subtotal</dt><dd><?= e(rupiah($subtotal)) ?></dd></div>
-        <div><dt>Potongan diskon <?= e($discountPercent) ?>%</dt><dd>-<?= e(rupiah($discount)) ?></dd></div>
-        <div class="cost-total"><dt>Total pembayaran</dt><dd><?= e(rupiah($total)) ?></dd></div>
+        <div><dt>Diskon <?= e($discountPercent) ?>%</dt><dd>-<?= e(rupiah($discount)) ?></dd></div>
+        <div class="cost-total"><dt>Total akhir</dt><dd><?= e(rupiah($total)) ?></dd></div>
       </dl>
     </div>
 
     <div class="summary-section">
-      <h2>Minat Belajar</h2>
+      <h2>Minat</h2>
       <?php if ($interestText !== []): ?>
         <ul class="interest-tags">
           <?php foreach ($interestText as $interest): ?>
@@ -161,12 +150,12 @@ function rupiah(int $value): string
           <?php endforeach; ?>
         </ul>
       <?php else: ?>
-        <p class="summary-empty">Belum memilih minat tambahan.</p>
+        <p class="summary-empty">Belum ada minat tambahan.</p>
       <?php endif; ?>
     </div>
 
     <div class="summary-section">
-      <h2>Fasilitas Kursus</h2>
+      <h2>Fasilitas</h2>
       <ul class="summary-facilities">
         <?php foreach ($facilities as $facility): ?>
           <li><?= e($facility) ?></li>
@@ -175,14 +164,14 @@ function rupiah(int $value): string
     </div>
 
     <div class="summary-section summary-note">
-      <h2>Catatan Tambahan</h2>
-      <p><?= $note !== '' ? e($note) : 'Tidak ada catatan tambahan.' ?></p>
+      <h2>Catatan</h2>
+      <p><?= $note !== '' ? e($note) : 'Tidak ada catatan.' ?></p>
     </div>
 
     <div class="summary-actions">
-      <a class="summary-button summary-button-primary" href="registration.php">Daftar Kursus Lain</a>
-      <a class="summary-button" href="history-dummy.php">Lihat Riwayat Dummy</a>
-      <a class="summary-button" href="index.php">Kembali ke Beranda</a>
+      <a class="summary-button summary-button-primary" href="registration.php">Daftar Lagi</a>
+      <a class="summary-button" href="history.php">Lihat History</a>
+      <a class="summary-button" href="index.php">Beranda</a>
     </div>
   </section>
 </main>
